@@ -2,6 +2,8 @@
 
 const { Command } = require('commander');
 const { saveVersion, listVersions, compareVersions } = require('./versionControl');
+const { retraceVersion } = require('./versionControl');
+
 
 const program = new Command();
 
