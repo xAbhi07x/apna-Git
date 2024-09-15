@@ -1,6 +1,6 @@
 {
   "name": "abhi-version-control",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "A simple file version control system",
   "main": "index.js",
   "bin": {
@@ -13,6 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^12.1.0",
-    "diff": "^6.0.0-beta"
+    "diff": "^6.0.0"
   }
 }

@@ -1,33 +1,34 @@
 #!/usr/bin/env node
 
 const { Command } = require('commander');
-const { saveVersion, listVersions, compareVersions } = require('./versionControl');
-const { retraceVersion } = require('./versionControl');
-
+const { listVersions, listBackups, restoreFromBackup } = require('./src/versionControl');
+const { saveVersion } = require('.//src/saveVersion');
+const { retraceVersion } = require('./src/retraceVersion');
 
 const program = new Command();
 
-// Define the 'push' command for committing a new version
+// Define the 'commit' command for committing a new version (now for repositories)
 program
-  .command('push <filePath>')
-  .description('Commit a new version of the file')
+  .command('commit <dirPath>')
+  .description('Commit a new version of the repository (directory)')
   .option('-m, --message <message>', 'Commit message')
-  .action((filePath, cmdObj) => {
+  .action((dirPath, cmdObj) => {
     const commitMessage = cmdObj.message || 'No commit message provided';
-    saveVersion(filePath, commitMessage);
+    console.log(`Commit message received: "${commitMessage}"`); // Debug log
+    saveVersion(dirPath, commitMessage);
   });
 
-// Define the 'pull' command for viewing file history
+// Define the 'log' command for viewing version history (similar to `git log`)
 program
-  .command('pull <filePath>')
-  .description('View file history')
+  .command('log <filePath>')
+  .description('View version history')
   .action((filePath) => {
     listVersions(filePath);
   });
 
-// Define the 'retrace' command for restoring a specific version
+// Define the 'checkout' command for restoring a specific version (similar to `git checkout`)
 program
-  .command('retrace <filePath>')
+  .command('checkout <filePath>')
   .description('Restore a specific version of the file')
   .option('--version <versionName>', 'Version name to restore')
   .action((filePath, cmdObj) => {
@@ -39,20 +40,20 @@ program
     retraceVersion(filePath, versionName);
   });
 
-// Define the 'compare' command for comparing two versions
+// Define the 'tag' command for listing all available backups (similar to `git tag`)
 program
-  .command('compare <filePath>')
-  .description('Compare two versions of a file')
-  .option('--version1 <versionName1>', 'First version to compare')
-  .option('--version2 <versionName2>', 'Second version to compare')
-  .action((filePath, cmdObj) => {
-    const version1 = cmdObj.version1;
-    const version2 = cmdObj.version2;
-    if (!version1 || !version2) {
-      console.error('Both version names are required.');
-      return;
-    }
-    compareVersions(filePath, version1, version2);
+  .command('tag')
+  .description('List all available backups')
+  .action(() => {
+    listBackups();
+  });
+
+// Define the 'restore' command for restoring from a backup (similar to `git restore`)
+program
+  .command('restore <backupName> <dirPath>')
+  .description('Restore a directory from a backup')
+  .action((backupName, dirPath) => {
+    restoreFromBackup(backupName, dirPath);
   });
 
 // Parse the command-line arguments

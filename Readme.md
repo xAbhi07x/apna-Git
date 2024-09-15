@@ -1,9 +1,7 @@
-You're right. Let's include the new comparison feature in the `README`:
 
-```markdown
 # Abhi Version Control
 
-A simple and efficient file version control system that helps you manage file versions and maintain commit history with ease.
+A simple and efficient file version control system designed to manage versions of entire directories and track changes with Delta for efficient versioning. Ideal for developers, writers, and anyone needing straightforward version control for directories.
 
 ## Table of Contents
 
@@ -17,7 +15,7 @@ A simple and efficient file version control system that helps you manage file ve
 
 ## Introduction
 
-Abhi Version Control is designed to provide a straightforward way to version files and track changes. It supports committing new versions, viewing file history, retracing previous versions, and comparing different versions. This tool is ideal for developers, writers, and anyone needing a simple version control solution without the complexity of larger systems.
+Abhi Version Control provides an easy-to-use interface for managing versions of entire directories. It supports committing new versions, viewing history, restoring specific versions, and comparing different versions using Delta for efficient versioning and comparison.
 
 ## Installation
 
@@ -33,95 +31,114 @@ This command makes the `abhi` command available globally on your system.
 
 ### Commands
 
-- **Push a New Version**
+- **Commit a New Version**
 
-  Use this command to commit a new version of a file:
+  Use this command to commit a new version of a directory:
 
   ```bash
-  abhi push <filePath> --message "Your commit message"
+  abhi commit <dirPath> --message "Your commit message"
   ```
 
-  - `<filePath>`: The path to the file you want to version.
+  - `<dirPath>`: The path to the directory you want to version.
   - `--message`: Optional commit message describing the changes.
 
-- **View File History**
+- **View Version History**
 
-  Use this command to view the history of a file:
-
-  ```bash
-  abhi pull <filePath>
-  ```
-
-  - `<filePath>`: The path to the file whose history you want to view.
-
-- **Retrace a File Version**
-
-  Use this command to restore a specific version of a file:
+  Use this command to view the history of a directory:
 
   ```bash
-  abhi retrace <filePath> --version <versionName>
+  abhi log <dirPath>
   ```
 
-  - `<filePath>`: The path to the file you want to restore.
-  - `--version`: The specific version of the file to restore.
+  - `<dirPath>`: The path to the directory whose history you want to view.
 
-- **Compare File Versions**
+- **Restore a Specific Version**
 
-  Use this command to compare two different versions of a file:
+  Use this command to restore a specific version of a directory:
 
   ```bash
-  abhi compare <filePath> --version1 <version1Name> --version2 <version2Name>
+  abhi checkout <dirPath> --version <versionName>
   ```
 
-  - `<filePath>`: The path to the file you want to compare.
-  - `--version1`: The first version of the file to compare.
-  - `--version2`: The second version of the file to compare.
+  - `<dirPath>`: The path to the directory you want to restore.
+  - `--version`: The specific version of the directory to restore.
+
+- **List Available Backups**
+
+  Use this command to list all available backups:
+
+  ```bash
+  abhi tag
+  ```
+
+- **Restore from a Backup**
+
+  Use this command to restore a directory from a backup:
+
+  ```bash
+  abhi restore <backupName> <dirPath>
+  ```
+
+  - `<backupName>`: The name of the backup to restore from.
+  - `<dirPath>`: The path to the directory to restore.
+
+
 
 ## Examples
 
 ### Committing a New Version
 
-To commit a new version of `example.txt` with a message:
+To commit a new version of the directory `exampleDir` with a message:
 
 ```bash
-abhi push example.txt --message "Added new section on features"
+abhi commit exampleDir --message "Updated documentation and fixed bugs"
 ```
 
-### Viewing File History
+### Viewing Directory History
 
-To view the history of `example.txt`:
+To view the history of `exampleDir`:
 
 ```bash
-abhi pull example.txt
+abhi log exampleDir
 ```
 
-### Retracing a Specific Version
+### Restoring a Specific Version
 
-To restore a previous version of `example.txt`:
+To restore a previous version of `exampleDir`:
 
 ```bash
-abhi retrace example.txt --version example_1624416384316.txt
+abhi checkout exampleDir --version exampleDir_1624416384316
 ```
 
-This will replace the current version of `example.txt` with the specified version.
+This will replace the current version of `exampleDir` with the specified version.
 
-### Comparing Two Versions
+### Listing Available Backups
 
-To compare two versions of `example.txt`:
+To list all available backups:
 
 ```bash
-abhi compare example.txt --version1 example_1624416384316.txt --version2 example_1624416402232.txt
+abhi tag
 ```
 
-This will show the differences between the specified versions of the file.
+### Restoring from a Backup
+
+To restore `exampleDir` from a backup named `backup_20240915`:
+
+```bash
+abhi restore backup_20240915 exampleDir
+```
+
+
+
+This will show the differences between the specified versions of the file within the directory.
 
 ## Features
 
-- **Version Management**: Save different versions of your files with timestamps and commit messages.
-- **File History**: View the history of changes made to a file, including commit messages.
-- **Retrace Versions**: Restore any previous version of a file, allowing you to easily revert to earlier states.
-- **Compare Versions**: Compare differences between two versions of a file, highlighting changes and differences.
-- **Simple CLI**: Use straightforward commands to manage file versions, view history, retrace previous versions, and compare file versions.
+- **Version Management**: Save different versions of directories with timestamps and commit messages.
+- **File History**: View the history of changes made to directories, including commit messages.
+- **Retrace Versions**: Restore any previous version of a directory, allowing easy reversion to earlier states.
+- **Backup and Restore**: List and restore from backups to safeguard your data.
+- **Simple CLI**: Use straightforward commands to manage directory versions, view history, restore previous versions, and compare file versions.
 
 ## Contributing
 
@@ -138,4 +155,3 @@ Please ensure that your code adheres to the project’s coding standards and inc
 
 This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 ```
-
